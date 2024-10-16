@@ -1,0 +1,8 @@
+.md-logo img {
+  scale: 1.4;
+}
+
+.md-header__title {
+  font-weight: 700;
+  text-transform: uppercase;
+}

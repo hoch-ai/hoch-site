@@ -1,0 +1,14 @@
+site_name: Hoch
+theme:
+  name: material
+  lamguage: en
+  palette:
+    primary: pink
+    accent: deep orange
+  font:
+    text: Rubik
+    code: Fira Code
+  logo: assets/logo.svg
+  favicon: assets/favicon.png
+extra_css:
+  - styles/extra.css

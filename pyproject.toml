@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "hoch-site"
+version = "0.1.0"
+description = "A MkDocs site for the Hoch organization"
+authors = ["Joe Geldart <joe@joegeldart.com>"]
+license = "Apache-2.0"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.8"
+mkdocs = "^1.2.3"
+mkdocs-material = "^7.1.0"
+
+[tool.poetry.dev-dependencies]
+poethepoet = "^0.29.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+serve = "mkdocs serve"
+build = "mkdocs build"
+
+[tool.poe.tasks.copy-site]
+help = "Copy the site to the deployment directory"
+shell = "cp -r ${CURRENT_DIR}/site/* ${DEPLOY_DIR}/"
+uses = {CURRENT_DIR = "_current_dir", DEPLOY_DIR = "_deployment_dir"}
+deps = ["build"]
+
+
+[tool.poe.tasks.deploy]
+help = "Deploy the site to GitHub Pages"
+#shell = """
+#cd ${DEPLOY_DIR} & mkdocs gh-deploy --config-file ${CURRENT_DIR}/mkdocs.yml --remote-branch main
+#"""
+shell = "mkdocs gh-deploy --config-file ${CURRENT_DIR}/mkdocs.yml --remote-branch main --remote-name origin"
+cwd = "${DEPLOY_DIR}"
+uses = {CURRENT_DIR = "_current_dir", DEPLOY_DIR = "_deployment_dir"}
+deps = ["copy-site"]
+
+[tool.poe.tasks._current_dir]
+help = "Expression for the current site's directory"
+expr = """pathlib.Path(".").absolute().as_posix()"""
+imports = ["pathlib"]
+
+[tool.poe.tasks._deployment_dir]
+help = "Expression for the deployment directory"
+expr = """(pathlib.Path(".").absolute().parent / "hoch-ai.github.io").as_posix()"""
+imports = ["pathlib"]

@@ -10,5 +10,14 @@ theme:
     code: Fira Code
   logo: assets/logo.svg
   favicon: assets/favicon.png
+  features:
+    - navigation.path
+    - navigation.tabs
 extra_css:
   - styles/extra.css
+nav:
+  - Home: index.md
+  - Design: design.md
+  - Specifications: /specifications
+  - Profiles: /profiles
+  - Implementions: implementations.md
